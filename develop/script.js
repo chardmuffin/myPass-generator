@@ -21,15 +21,12 @@ var generatePassword = function() {
   //get input from user
   var pwLength = setLength();
   var hasLower = confirm("Should your password include lowercase letters?\n(Ok = Yes, Cancel = No)");
-  console.log("Password will include lowercase letters", hasLower);
   var hasUpper = confirm("Should your password include uppercase letters?\n(Ok = Yes, Cancel = No)");
-  console.log("Password will include uppercase letters", hasUpper);
   var hasNumeric = confirm("Should your password include numbers?\n(Ok = Yes, Cancel = No)");
-  console.log("Password will include numbers", hasNumeric);
   var hasSpecial = confirm("Should your password include any special characters?\n(Ok = Yes, Cancel = No)");
-  console.log("Password will include special characters", hasSpecial);
 
-  //if user cancels all prompts, give them a random password (if all has****** vars are false)
+  // if user cancels all prompts, all has****** vars are false
+  // give them a random password
   if (!hasLower && !hasUpper && !hasNumeric && !hasSpecial) {
     alert("You selected no criteria. Generating a random password");
 
@@ -50,11 +47,17 @@ var generatePassword = function() {
     }
   }
 
+  // log password criteria to console
+  console.log("Password will include lowercase letters:", hasLower);
+  console.log("Password will include uppercase letters:", hasUpper);
+  console.log("Password will include numbers:", hasNumeric);
+  console.log("Password will include special characters:", hasSpecial);
+
   //generate the string of chars to be used in password
   var charBank = generateCharBank(hasLower, hasUpper, hasNumeric, hasSpecial);
-  var password = "";
 
   //generate the password
+  var password = "";
   for (i = 0; i < pwLength; i++) {
     password += charBank.charAt(Math.floor(Math.random() * charBank.length));
   }
@@ -71,12 +74,12 @@ var setLength = function() {
   // if user entered a number 8-128, return the number
   if (!Number.isNaN(length) && length >= 8 && length <= 128) {
 
-    console.log("user entered a valid number: ", length)
+    console.log("user entered a valid length: ", length)
     return length;
   }
 
-  //user cancelled or entered an invalid number
-  console.log("user entered an invalid number: ", length)
+  //user canceled or entered an invalid number
+  console.log("user entered an invalid length: ", length)
   window.alert("You did not provide a valid number. Please try again.");
   return setLength();
 }
