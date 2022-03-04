@@ -15,34 +15,55 @@ generateBtn.addEventListener("click", writePassword);
 
 
 // my code
-var alphaLowercase = "abcdefghijklmnopqrstuvwxyz";
-var alphaUppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-var numeric = "1234567890"
-var specialChars = "~!@#$%^&*()[]{};:<>?,./-=_+"
-
-// generate and return a password
+// function to generate and return the password based on user input
 var generatePassword = function() {
 
   //get input from user
-  var pwLength = getLength();
-  //lowerPrompt();
-  //upperPrompt();
-  //numericPrompt();
-  //specialPrompt();
+  var pwLength = setLength();
+  var hasLower = confirm("Should your password include lowercase letters?\n(Ok = Yes, Cancel = No)");
+  console.log("Password will include lowercase letters", hasLower);
+  var hasUpper = confirm("Should your password include uppercase letters?\n(Ok = Yes, Cancel = No)");
+  console.log("Password will include uppercase letters", hasUpper);
+  var hasNumeric = confirm("Should your password include numbers?\n(Ok = Yes, Cancel = No)");
+  console.log("Password will include numbers", hasNumeric);
+  var hasSpecial = confirm("Should your password include any special characters?\n(Ok = Yes, Cancel = No)");
+  console.log("Password will include special characters", hasSpecial);
 
-  // generate pass based on user input
+  //if user cancels all prompts, give them a random password (if all has****** vars are false)
+  if (!hasLower && !hasUpper && !hasNumeric && !hasSpecial) {
+    alert("You selected no criteria. Generating a random password");
 
-  var generatedPass = '';
-
-  for (i = 0; i < pwLength; i++) {
-
+    // choose random boolean values for password criteria until at least one is true
+    while(!hasLower && !hasUpper && !hasNumeric && !hasSpecial) {
+      if (Math.floor(Math.random() * 2) == 0) {
+        hasLower = true;
+      }
+      if (Math.floor(Math.random() * 2) == 0) {
+        hasUpper = true;
+      }
+      if (Math.floor(Math.random() * 2) == 0) {
+        hasNumeric = true;
+      }
+      if (Math.floor(Math.random() * 2) == 0) {
+        hasSpecial = true;
+      }
+    }
   }
 
-  return generatedPass;
+  //generate the string of chars to be used in password
+  var charBank = generateCharBank(hasLower, hasUpper, hasNumeric, hasSpecial);
+  var password = "";
+
+  //generate the password
+  for (i = 0; i < pwLength; i++) {
+    password += charBank.charAt(Math.floor(Math.random() * charBank.length));
+  }
+
+  return password;
 }
 
 // prompt user for pw length and returns their entry if it is a number
-var getLength = function() {
+var setLength = function() {
 
   //get input in number form
   var length = Number(window.prompt("Enter a length for the password (please choose a value from 8-128):"));
@@ -54,8 +75,31 @@ var getLength = function() {
     return length;
   }
 
-  //user entered an invalid number
+  //user cancelled or entered an invalid number
   console.log("user entered an invalid number: ", length)
   window.alert("You did not provide a valid number. Please try again.");
-  return getLength();
+  return setLength();
+}
+
+// generates the String of characters to use in the password generation
+var generateCharBank = function(hasLowerChars, hasUpperChars, hasNumericChars, hasSpecialChars) {
+
+  var characterString = '';
+
+  //build a string of the chars the password should contain
+  if (hasLowerChars) {
+    characterString += "abcdefghijklmnopqrstuvwxyz";
+  }
+  if (hasUpperChars) {
+    characterString += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  }
+  if (hasNumericChars) {
+    characterString += "1234567890";
+  }
+  if (hasSpecialChars) {
+    characterString += "!@#$%^&*?";
+  }
+
+  console.log("Building a password from the string: ", characterString)
+  return characterString;
 }
