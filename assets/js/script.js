@@ -1,46 +1,3 @@
-
-// prompts user for pw length and returns their entry if it is a number
-var setLength = function() {
-
-  //get input in number form
-  var length = Number(window.prompt("Enter a length for the password (please choose a value from 8-128):"));
-
-  // if user entered a number 8-128, return the number
-  if (!Number.isNaN(length) && length >= 8 && length <= 128) {
-
-    console.log("user entered a valid length: ", length)
-    return length;
-  }
-
-  //user canceled or entered an invalid number
-  console.log("user entered an invalid length: ", length)
-  window.alert("You did not provide a valid number. Please try again.");
-  return setLength();
-}
-
-// generates the String of characters to use in the password generation
-var generateCharBank = function(hasLowerChars, hasUpperChars, hasNumericChars, hasSpecialChars) {
-
-  var characterString = '';
-
-  //build a string of the chars the password should contain
-  if (hasLowerChars) {
-    characterString += "abcdefghijklmnopqrstuvwxyz";
-  }
-  if (hasUpperChars) {
-    characterString += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  }
-  if (hasNumericChars) {
-    characterString += "1234567890";
-  }
-  if (hasSpecialChars) {
-    characterString += "!@#$%^&*?";
-  }
-
-  console.log("Building a password from the string: ", characterString)
-  return characterString;
-}
-
 // function to generate and return the password based on user input
 var generatePassword = function() {
 
@@ -89,6 +46,47 @@ var generatePassword = function() {
   }
 
   return password;
+}
+
+// prompts user for pw length and returns their entry if it is a number
+var setLength = function() {
+
+  //get input in number form
+  var length = Number(window.prompt("Enter a length for the password (please choose a value from 8-128):"));
+
+  // if user entered a number 8-128, return the number
+  if (!Number.isNaN(length) && length >= 8 && length <= 128) {
+
+    console.log("user entered a valid length: ", length)
+    return length;
+  }
+
+  //user canceled or entered an invalid number
+  console.log("user entered an invalid length: ", length)
+  window.alert("You did not provide a valid number. Please try again.");
+  return setLength();
+}
+
+// generates the String of characters to use in the password generation
+var generateCharBank = function(hasLowerChars, hasUpperChars, hasNumericChars, hasSpecialChars) {
+
+  var characterString = '';
+
+  if (hasLowerChars) {
+    characterString += "abcdefghijklmnopqrstuvwxyz";
+  }
+  if (hasUpperChars) {
+    characterString += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  }
+  if (hasNumericChars) {
+    characterString += "1234567890";
+  }
+  if (hasSpecialChars) {
+    characterString += "!@#$%^&*?";
+  }
+
+  console.log("Building a password from the string: ", characterString)
+  return characterString;
 }
 
 // Assignment Code
